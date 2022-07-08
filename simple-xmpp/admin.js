@@ -1,7 +1,8 @@
 const { execSync } = require('child_process');
 
-let host = execSync('echo $(terraform -chdir=/Users/lmaselek/lm-terraform output -raw load_balancer_url) | tr -d \'\n\'');
-// let host = "lm-load-balancer-b043a84bc246b58c.elb.us-east-1.amazonaws.com"
+const dir = process.env.LM_TERRAFORM || '/Users/lmaselek/lm-terraform';
+console.log(`terraform dir is ${dir}`);
+let host = execSync(`echo $(terraform -chdir=${dir} output -raw load_balancer_url) | tr -d \'\n\'`);
 console.log(`Connect to ${host}`);
 
 const xmpp = require("simple-xmpp");
